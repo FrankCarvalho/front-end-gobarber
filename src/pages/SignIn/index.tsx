@@ -10,8 +10,8 @@ import { Container, Content, Background } from './styles';
 
 const SignIn: React.FC = () => (
   <Container>
-    <Content></Content>
-      <img src="{logoImg}" alt="GoBarber"/>
+    <Content>
+      <img src={logoImg} alt="GoBarber"/>
 
       <form>
         <h1>Faça seu login</h1>
@@ -28,6 +28,7 @@ const SignIn: React.FC = () => (
         <FiLogIn />
         Criar conta
         </a>
+        </Content>
     <Background></Background>
   </Container>
 );

@@ -1,4 +1,4 @@
-import styled, {keyframes} from 'styled-components';
+import styled from 'styled-components';
 import { shade } from 'polished';
 
 import signInBackground from '../../assets/sign-in-background.png';
