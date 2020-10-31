@@ -1,10 +1,11 @@
 import React from 'react';
 
+import SignIn from './pages/SignIn';
 import GlobalStayle from './styles/globals';
 
 const App: React.FC = () => (
   <>
-  <h1>Hello World</h1>
+  <SignIn />
   <GlobalStayle/>
   </>
 );
