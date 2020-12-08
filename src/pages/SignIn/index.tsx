@@ -1,10 +1,10 @@
-import React, { useRef, useCallback, useContext } from 'react';
+import React, { useRef, useCallback } from 'react';
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi'
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
-import { AuthContext } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/auth';
 import getValidationErrors from '../../utlis/getValidationErros';
 
 import logoImg from '../../assets/logo.svg';
@@ -13,6 +13,7 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 
 import { Container, Content, Background } from './styles';
+import { useToast } from '../../hooks/toast';
 
 interface SignInFormData{
   email: string;
@@ -22,9 +23,8 @@ interface SignInFormData{
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const { user, signIn } = useContext(AuthContext);
-
-  console.log(user);
+  const { signIn } = useAuth();
+  const {addToast} = useToast();
 
   const handleSubmit = useCallback(async (data: SignInFormData) => {
     try {
@@ -45,11 +45,18 @@ const SignIn: React.FC = () => {
         password: data.password,
       });
     } catch (err) {
-      const errors = getValidationErrors(err);
-      formRef.current?.setErrors(errors);
+      if(err instanceof Yup.ValidationError){
+        const errors = getValidationErrors(err);
+        formRef.current?.setErrors(errors);
+      } 
+      addToast({
+        type: 'error',
+        title: 'Erro na autenticação',
+        description: 'Ocorreu um erro ao fazer login, cheque as credenciais.',
+      });    
     }
   },
-    [signIn]
+    [signIn, addToast]
   );
 
   return (
@@ -61,16 +68,11 @@ const SignIn: React.FC = () => {
           <h1>Faça seu login</h1>
 
           <Input name="email" icon={FiMail} placeholder="E-mail" />
-          <Input
-            name="password"
-            icon={FiLock}
-            type="password"
-            placeholder="Senha"
-          />
+          <Input name="password" icon={FiLock} type="password" placeholder="Senha"/>
 
           <Button type="submit">Entrar</Button>
 
-          <a href="forgot">Esquci minha senha</a>
+          <a href="forgot">Esqueci minha senha</a>
         </Form>
 
         <a href="login">
