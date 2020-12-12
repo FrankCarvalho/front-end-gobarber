@@ -11,11 +11,13 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 
 import { Container, Content, Background } from './styles';
+import { useToast } from '../../hooks/toast';
 
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   console.log(formRef);
+  const {addToast} = useToast();
 
  const handleSubmit = useCallback(async(data: object) => {
   formRef.current?.setErrors({});
@@ -33,8 +35,14 @@ const SignUp: React.FC = () => {
       });
     }catch(err){
         const errors = getValidationErrors(err);
+
         formRef.current?.setErrors(errors);
     }
+    addToast({
+      type: 'error',
+      title: 'Erro no cadastro',
+      description: 'Ocorreu um erro ao fazer cadastro, cheque as credenciais.',
+    });
   }, []);
 
   return (
