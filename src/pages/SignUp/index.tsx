@@ -4,13 +4,14 @@ import { FormHandles } from '@unform/core';
 import {Form} from '@unform/web';
 import * as Yup from 'yup'
 import getValidationErrors from '../../utlis/getValidationErros';
+import {Link} from 'react-router-dom';
 
 import logoImg from '../../assets/logo.svg';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
-import { Container, Content, Background } from './styles';
+import { Container, Content, AnimationContainer, Background } from './styles';
 import { useToast } from '../../hooks/toast';
 
 const SignUp: React.FC = () => {
@@ -49,6 +50,7 @@ const SignUp: React.FC = () => {
     <Container>
     <Background />
    <Content>
+     <AnimationContainer>
      <img src={logoImg} alt="GoBarber"/>
 
      <Form ref={formRef} onSubmit={handleSubmit}>
@@ -61,10 +63,11 @@ const SignUp: React.FC = () => {
        <Button type="submit">Cadastrar</Button>
      </Form>
 
-     <a href="login">
+     <Link to="/">
        <FiArrowLeft />
        Voltar para logon
-       </a>
+       </Link>
+       </AnimationContainer>
        </Content>
 
  </Container>
