@@ -194,6 +194,7 @@ const Dashboard: React.FC = () => {
           </Section>
 
           <Section>
+          <strong>Tarde</strong>
           {afternoonAppointments.map(appointment => (
               <Appointment key={appointment.id}>
                 <span>
